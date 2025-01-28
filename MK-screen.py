@@ -11,10 +11,9 @@
 #
 # Done   Name     Description
 # ----   ----     ----------- 
-# No  | Screen | Have proper screen setup.
+# Yes | Screen | Have proper screen setup.
 # No  | Text   | Allow for text to send. (Simple setup and run)
 # No  | Voice  | Allow for voice to send. (allow deactive to put ai to sleep)
-# No  | Reset  | Have reset buttons for Model. (change at a later date)
 # No  | Icon   | Custom icon.
 # No  | Help   | When typed help add a help screen to console
 #
