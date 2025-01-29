@@ -11,19 +11,19 @@
 #
 # Done   Name     Description
 # ----   ----     ----------- 
-# Yes  | Make | Allow make for easy sending.
+# Yes  | Make | Allows for easy github updating.
 #
 #############################################################
 
 build:
 	@echo Deleting
-	python MK-reset.py
+	@python -c 'from MK_manage import setup; setup.delete()'
 
 	@echo Uploading!
-	git add .
-	git commit -m "Auto Update"
-	git push origin master
+	@git add .
+	@git commit -m "Auto Update"
+	@git push origin master
 	@echo Uploaded!
 
 	@echo Creating
-	python MK-create.py
+	@python -c 'from MK_manage import setup; setup.create("")'

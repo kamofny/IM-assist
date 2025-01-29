@@ -15,13 +15,15 @@
 # No  | Text   | Allow for text to send. (Simple setup and run)
 # No  | Voice  | Allow for voice to send. (allow deactive to put ai to sleep)
 # No  | Icon   | Custom icon.
-# No  | Help   | When typed help add a help screen to console
+# No  | Help   | When typed help add a help screen to console.
+# No  | Setup  | Get Setup working.
 #
 #############################################################
 
-import tkinter
-import tkinter.messagebox
+import tkinter #Not used
+import tkinter.messagebox #Not used
 import customtkinter
+import MK_manage
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue") 
@@ -34,11 +36,11 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         self.after(10, self.lift) #Bring to front
 
         #Setup buttons
-        self.clear = customtkinter.CTkButton(self, command=self.placeholder, text="Clear Assistant")
+        self.clear = customtkinter.CTkButton(self, command=self.delete, text="Clear Assistant")
         self.clear.grid(row=0, column=0, padx=(20,10), pady=(20,10))
 
-        self.create = customtkinter.CTkButton(self, command=self.placeholder, text="Create Assistant")
-        self.create.grid(row=0, column=1, padx=(10,20), pady=(20,10))
+        self.setup = customtkinter.CTkButton(self, command=self.create, text="Create Assistant")
+        self.setup.grid(row=0, column=1, padx=(10,20), pady=(20,10))
 
         #Seperation between API/Setup
         self.split = customtkinter.CTkFrame(self, height=10)
@@ -51,8 +53,10 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         self.api_button = customtkinter.CTkButton(master=self, fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="Add Api Key")
         self.api_button.grid(row=2, column=1, padx=(10, 20), pady=(10, 20), sticky="nsew")
 
-    def placeholder(self):
-        print("placeholder")
+    def delete(self):
+        MK_manage.setup.delete()
+    def create(self):
+        MK_manage.setup.create()
 
 #Main app class
 class App(customtkinter.CTk):
@@ -108,6 +112,7 @@ class App(customtkinter.CTk):
             self.toplevel_window.deiconify() #Deminimize it
             self.toplevel_window.focus() #Bring forward
 
+#This is the main file that will open and start everything
 if __name__ == "__main__":
     app = App()
     app.mainloop()
