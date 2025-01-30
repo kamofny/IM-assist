@@ -24,6 +24,7 @@ import tkinter #Not used
 import tkinter.messagebox #Not used
 import customtkinter
 import MK_manage
+import MK_start
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue") 
@@ -37,7 +38,10 @@ class ToplevelWindow(customtkinter.CTkToplevel):
 
         #Add api key?
         self.api_box= customtkinter.CTkEntry(self, placeholder_text="Enter Api Key")
-        self.api_box.grid(row=0, column=0, columnspan=2, padx=(20,20), pady=(20,20), sticky="nsew")
+        self.api_box.grid(row=0, column=0, padx=(20,10), pady=(20,20), sticky="nsew")
+
+        self.setup = customtkinter.CTkButton(self, command=self.create, text="Create Assistant")
+        self.setup.grid(row=0, column=1, padx=(10,20), pady=(20,20))
 
         #Seperation between API/Setup
         self.split = customtkinter.CTkFrame(self, height=10)
@@ -45,16 +49,18 @@ class ToplevelWindow(customtkinter.CTkToplevel):
 
         #Setup buttons
         self.clear = customtkinter.CTkButton(self, command=self.delete, text="Clear Assistant")
-        self.clear.grid(row=2, column=0, padx=(20,10), pady=(10,20))
+        self.clear.grid(row=2, column=0, padx=(20,10), pady=(20,20))
 
-        self.setup = customtkinter.CTkButton(self, command=self.create, text="Create Assistant")
-        self.setup.grid(row=2, column=1, padx=(10,20), pady=(10,20))
+        self.ready = customtkinter.CTkButton(self, command=self.start, text="Start Assistant")
+        self.ready.grid(row=2, column=1, padx=(10,20), pady=(20,20))
 
     def delete(self):
         MK_manage.setup.delete()
     def create(self):
         key = self.api_box.get()
         MK_manage.setup.create(key)
+    def start(self):
+        print("test")#temp
 
 #Main app class
 class App(customtkinter.CTk):
@@ -82,6 +88,7 @@ class App(customtkinter.CTk):
         self.topbar_button_1.grid(row=0, column=0, padx=20, pady=20)
         self.topbar_button_2 = customtkinter.CTkButton(self.topbar_frame, command=self.voice_event, text="Voice")
         self.topbar_button_2.grid(row=0, column=2, padx=20, pady=20)
+        self.topbar_button_2.configure(state="disabled")#temp
 
         #Console
         self.textbox = customtkinter.CTkTextbox(self, width=250)
