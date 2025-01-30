@@ -16,7 +16,7 @@
 # No  | Voice  | Allow for voice to send. (allow deactive to put ai to sleep)
 # No  | Icon   | Custom icon.
 # No  | Help   | When typed help add a help screen to console.
-# No  | Setup  | Get Setup working.
+# Yes | Setup  | Get Setup working.
 #
 #############################################################
 
@@ -35,28 +35,26 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         self.title("IM-Assist by KAM")
         self.after(10, self.lift) #Bring to front
 
-        #Setup buttons
-        self.clear = customtkinter.CTkButton(self, command=self.delete, text="Clear Assistant")
-        self.clear.grid(row=0, column=0, padx=(20,10), pady=(20,10))
-
-        self.setup = customtkinter.CTkButton(self, command=self.create, text="Create Assistant")
-        self.setup.grid(row=0, column=1, padx=(10,20), pady=(20,10))
+        #Add api key?
+        self.api_box= customtkinter.CTkEntry(self, placeholder_text="Enter Api Key")
+        self.api_box.grid(row=0, column=0, columnspan=2, padx=(20,20), pady=(20,20), sticky="nsew")
 
         #Seperation between API/Setup
         self.split = customtkinter.CTkFrame(self, height=10)
-        self.split.grid(row=1, column=0, columnspan=2, padx=(20,20), pady=(10,10), sticky="nsew")
+        self.split.grid(row=1, column=0, columnspan=2, padx=(20,20), pady=(0,0), sticky="nsew")
 
-        #Add api key?
-        self.api_box= customtkinter.CTkEntry(self, placeholder_text="Enter Api Key")
-        self.api_box.grid(row=2, column=0, padx=(20,10), pady=(10,20), sticky="nsew")
+        #Setup buttons
+        self.clear = customtkinter.CTkButton(self, command=self.delete, text="Clear Assistant")
+        self.clear.grid(row=2, column=0, padx=(20,10), pady=(10,20))
 
-        self.api_button = customtkinter.CTkButton(master=self, fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="Add Api Key")
-        self.api_button.grid(row=2, column=1, padx=(10, 20), pady=(10, 20), sticky="nsew")
+        self.setup = customtkinter.CTkButton(self, command=self.create, text="Create Assistant")
+        self.setup.grid(row=2, column=1, padx=(10,20), pady=(10,20))
 
     def delete(self):
         MK_manage.setup.delete()
     def create(self):
-        MK_manage.setup.create()
+        key = self.api_box.get()
+        MK_manage.setup.create(key)
 
 #Main app class
 class App(customtkinter.CTk):

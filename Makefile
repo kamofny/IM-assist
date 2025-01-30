@@ -26,4 +26,4 @@ build:
 	@echo Uploaded!
 
 	@echo Creating
-	@python -c 'from MK_manage import setup; setup.create("")'
+	@python -c 'from MK_manage import setup; setup.create(\"\")'

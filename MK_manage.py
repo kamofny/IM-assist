@@ -12,7 +12,7 @@
 # Done   Name     Description
 # ----   ----     ----------- 
 # Yes | Setup | Allow buttons to delete/create.
-# No  | API   | Allow for API addition.
+# Yes | API   | Allow for API addition.
 #
 #############################################################
 
@@ -47,11 +47,15 @@ class setup():
         if keys == "":
             with open('../MK_keys.json','r') as json_file:
                 info = json.load(json_file)
-                gpt = info["gpt"]
-                client = OpenAI(api_key=gpt)
+                keys = info["gpt"]
+                client = OpenAI(api_key=keys)
                 json_file.close()
         else:
-            client = OpenAI(api_key=keys)
+            try:
+                info = {}
+                client = OpenAI(api_key=keys)
+            except:
+                print("Error") #Print to screen
 
         #Create new assistant
         assist = client.beta.assistants.create(
@@ -60,7 +64,7 @@ class setup():
             model="gpt-4o-mini"
         )
 
-        info['gpt'] = gpt
+        info['gpt'] = keys
         info['assist'] = assist.id
         info['thread'] = ""
 
