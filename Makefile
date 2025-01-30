@@ -15,6 +15,10 @@
 #
 #############################################################
 
+start:
+	@echo Starting
+	@python MK_screen.py
+
 build:
 	@echo Deleting
 	@python -c 'from MK_manage import setup; setup.delete()'

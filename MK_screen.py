@@ -86,19 +86,25 @@ class App(customtkinter.CTk):
         #Console
         self.textbox = customtkinter.CTkTextbox(self, width=250)
         self.textbox.grid(row=1, column=0, columnspan=2, padx=(20,20), pady=(10,10), sticky="nsew")
-        self.textbox.insert("end", "Welcome, This is the console. You first need to setup then either speak/text!\n\n")
+        self.textbox.insert("end", "Welcome, This is the console. You first need to setup then either speak/text!\n")
+        self.textbox.insert("end", "You will need an API key for this to work. Then put into setup and hit create!\n\n")
 
         #Text entry
         self.entry = customtkinter.CTkEntry(self, placeholder_text="Enter text to start chatting.")
         self.entry.grid(row=2, column=0, padx=(20,10), pady=(10,20), sticky="nsew")
         
         #Submit text button
-        self.main_button_1 = customtkinter.CTkButton(master=self, fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="Send MSG")
+        self.main_button_1 = customtkinter.CTkButton(master=self, command=self.text_event, fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="Send MSG")
         self.main_button_1.grid(row=2, column=1, padx=(10, 20), pady=(10, 20), sticky="nsew")
 
     #Moves from text to voice
     def voice_event(self):
-        self.textbox.insert("end","Placeholder\n\n")
+        self.textbox.insert("end","voice event\n\n")
+        self.textbox.see("end")
+
+    #Send text
+    def text_event(self):
+        self.textbox.insert("end","text event\n\n")
         self.textbox.see("end")
 
     #Setup window is made/moved to the front
@@ -107,8 +113,12 @@ class App(customtkinter.CTk):
             self.toplevel_window = ToplevelWindow()
             
         else:
-            self.toplevel_window.deiconify() #Deminimize it
+            self.toplevel_window.deiconify() #De-Minimize it
             self.toplevel_window.focus() #Bring forward
+
+    #Allow printing custom messages
+    def print(self,msg):
+        self.textbox.insert("end", msg + "\n\n")
 
 #This is the main file that will open and start everything
 if __name__ == "__main__":

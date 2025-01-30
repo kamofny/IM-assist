@@ -51,12 +51,9 @@ class setup():
                 client = OpenAI(api_key=keys)
                 json_file.close()
         else:
-            try:
-                info = {}
-                client = OpenAI(api_key=keys)
-            except:
-                print("Error") #Print to screen
-
+            info = {}
+            client = OpenAI(api_key=keys)
+            
         #Create new assistant
         assist = client.beta.assistants.create(
             name="IM-assist",
