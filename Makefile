@@ -25,7 +25,7 @@ build:
 
 	@echo Uploading!
 	@git add .
-	@git commit -m "Incomplete Save"
+	@git commit -m "Auto Update"
 	@git push origin master
 	@echo Uploaded!
 

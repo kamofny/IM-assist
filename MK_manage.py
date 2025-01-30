@@ -69,3 +69,15 @@ class setup():
         with open('MK_info.json','w') as json_file:
             json.dump(info, json_file, indent=4)
             json_file.close()
+
+    def convo():
+        with open("MK_info.json","r") as info_file:
+            info = json.load(info_file)
+            gpt = info["gpt"]
+            client = OpenAI(api_key=gpt)
+            info_file.close()
+        threads = client.beta.threads.create()
+        with open("MK_info.json","w") as add_file:
+            info['thread'] = threads.id
+            json.dump(info,add_file,indent=4)
+            add_file.close()

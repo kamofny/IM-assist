@@ -54,13 +54,13 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         self.ready = customtkinter.CTkButton(self, command=self.start, text="Start Assistant")
         self.ready.grid(row=2, column=1, padx=(10,20), pady=(20,20))
 
-    def delete(self):
+    def delete(self): #Allows to change API key
         MK_manage.setup.delete()
-    def create(self):
+    def create(self): #Allows to add API key
         key = self.api_box.get()
         MK_manage.setup.create(key)
-    def start(self):
-        print("test")#temp
+    def start(self): #Allows to start new convo
+        MK_manage.setup.convo()
 
 #Main app class
 class App(customtkinter.CTk):
@@ -106,13 +106,15 @@ class App(customtkinter.CTk):
 
     #Moves from text to voice
     def voice_event(self):
-        self.textbox.insert("end","voice event\n\n")
+        self.textbox.insert("end","voice event\n\n") #placeholder/temp
         self.textbox.see("end")
 
     #Send text
     def text_event(self):
-        self.textbox.insert("end","text event\n\n")
-        self.textbox.see("end")
+        msg = self.entry.get()
+        response = MK_start.running.response(msg)
+        self.textbox.insert("end",response + "\n\n")
+        self.textbox.see("end") #Does not clear entry box
 
     #Setup window is made/moved to the front
     def setup_event(self):
@@ -122,10 +124,6 @@ class App(customtkinter.CTk):
         else:
             self.toplevel_window.deiconify() #De-Minimize it
             self.toplevel_window.focus() #Bring forward
-
-    #Allow printing custom messages
-    def print(self,msg):
-        self.textbox.insert("end", msg + "\n\n")
 
 #This is the main file that will open and start everything
 if __name__ == "__main__":
