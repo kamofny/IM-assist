@@ -57,7 +57,7 @@ class setup():
         #Create new assistant
         assist = client.beta.assistants.create(
             name="IM-assist",
-            instructions="Be sarcastic",
+            instructions="Be Nice and informative",
             model="gpt-4o-mini"
         )
 
