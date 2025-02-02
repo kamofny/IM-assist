@@ -18,6 +18,8 @@
 # No  | Help   | When typed help add a help screen to console.
 # Yes | Setup  | Get Setup working.
 #
+# Planned to add multithreading
+#
 #############################################################
 
 import tkinter #Not used
@@ -25,6 +27,7 @@ import tkinter.messagebox #Not used
 import customtkinter
 import MK_manage
 import MK_start
+import threading #Being implemented
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue") 
@@ -112,9 +115,13 @@ class App(customtkinter.CTk):
     #Send text
     def text_event(self):
         msg = self.entry.get()
+        self.textbox.insert("end","You: " + msg + "\n\n")
+        self.textbox.see("end")
+        self.entry.delete(0,"end")
+
         response = MK_start.running.response(msg)
-        self.textbox.insert("end",response + "\n\n")
-        self.textbox.see("end") #Does not clear entry box
+        self.textbox.insert("end",": " + response + "\n\n")
+        self.textbox.see("end")
 
     #Setup window is made/moved to the front
     def setup_event(self):
@@ -124,6 +131,14 @@ class App(customtkinter.CTk):
         else:
             self.toplevel_window.deiconify() #De-Minimize it
             self.toplevel_window.focus() #Bring forward
+    
+    def refresh(self):
+        self.root.update()
+        self.root.after(1000,self.refresh)
+
+    def start(self):
+        self.refresh()
+        threading.Thread(target=self.text_event()).start()
 
 #This is the main file that will open and start everything
 if __name__ == "__main__":
