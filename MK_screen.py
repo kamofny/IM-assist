@@ -19,6 +19,8 @@
 # Yes | Thread | Allow Multithreading
 #
 # MAIN FILE NOTES (FOUND ONLY HERE): Planning to create executable.
+# When voice is hit, diable text, enable mic with new thread and stuff...
+# When thread goes then disable send button. (Find how to stop voice also?)
 #
 #############################################################
 

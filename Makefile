@@ -26,7 +26,7 @@ build:
 
 	@echo Uploading!
 	@git add .
-	@git commit -m "Auto Update"
+	@git commit -m "Account Change"
 	@git push origin master
 	@echo Uploaded!
 
