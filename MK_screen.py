@@ -12,22 +12,20 @@
 # Done   Name     Description
 # ----   ----     ----------- 
 # Yes | Screen | Have proper screen setup.
-# No  | Text   | Allow for text to send. (Simple setup and run)
+# Yes | Text   | Allow for text to send.
 # No  | Voice  | Allow for voice to send. (allow deactive to put ai to sleep)
-# No  | Icon   | Custom icon.
-# No  | Help   | When typed help add a help screen to console.
-# Yes | Setup  | Get Setup working.
+# Yes | Icon   | Custom icon.
+# Yes | Setup  | Get Setup screen.
+# Yes | Thread | Allow Multithreading
 #
-# Planned to add multithreading
+# MAIN FILE NOTES (FOUND ONLY HERE): Planning to create executable.
 #
 #############################################################
 
-import tkinter #Not used
-import tkinter.messagebox #Not used
 import customtkinter
 import MK_manage
 import MK_start
-import threading #Being implemented
+from threading import Thread
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue") 
@@ -73,6 +71,7 @@ class App(customtkinter.CTk):
         self.title("IM-Assist by KAM")
         self.geometry(f"{1100}x{580}")
         self.toplevel_window = None
+        self.iconbitmap(default="logo.ico")
 
         #Determine if things in grid grows(1) or doesnt (0)
         self.grid_columnconfigure(0, weight=1)  
@@ -104,7 +103,7 @@ class App(customtkinter.CTk):
         self.entry.grid(row=2, column=0, padx=(20,10), pady=(10,20), sticky="nsew")
         
         #Submit text button
-        self.main_button_1 = customtkinter.CTkButton(master=self, command=self.text_event, fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="Send MSG")
+        self.main_button_1 = customtkinter.CTkButton(master=self, command=self.threads, fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="Send MSG")
         self.main_button_1.grid(row=2, column=1, padx=(10, 20), pady=(10, 20), sticky="nsew")
 
     #Moves from text to voice
@@ -112,7 +111,12 @@ class App(customtkinter.CTk):
         self.textbox.insert("end","voice event\n\n") #placeholder/temp
         self.textbox.see("end")
 
-    #Send text
+    #Threading text_event
+    def threads(self):
+        t = Thread(target=self.text_event)
+        t.start()
+
+    #Display sent and recieved text
     def text_event(self):
         msg = self.entry.get()
         self.textbox.insert("end","You: " + msg + "\n\n")
@@ -131,14 +135,6 @@ class App(customtkinter.CTk):
         else:
             self.toplevel_window.deiconify() #De-Minimize it
             self.toplevel_window.focus() #Bring forward
-    
-    def refresh(self):
-        self.root.update()
-        self.root.after(1000,self.refresh)
-
-    def start(self):
-        self.refresh()
-        threading.Thread(target=self.text_event()).start()
 
 #This is the main file that will open and start everything
 if __name__ == "__main__":

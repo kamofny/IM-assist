@@ -11,8 +11,10 @@
 #
 # Done   Name     Description
 # ----   ----     ----------- 
-# Yes | Setup | Allow buttons to delete/create.
-# Yes | API   | Allow for API addition.
+# Yes | Delete | Allow full deletion.
+# Yes | Create | Allow full completion.
+# Yes | Convo  | Allow new thread creation.
+# Yes | MyApi  | Allow a quick add. (Will be removed later.)
 #
 #############################################################
 
@@ -21,8 +23,9 @@ import json
 
 #Run file depending on button pressed
 class setup():
+
+    #Get key and and delete all assistants
     def delete():
-        #Get key and and delete all assistants
         with open('MK_info.json','r') as json_file:
             info = json.load(json_file)
             gpt = info["gpt"]
@@ -42,6 +45,7 @@ class setup():
             json.dump(info, json_file, indent=4)
             json_file.close()
 
+    #Add assistant
     def create(keys):
         #Get APIs from either input or personal file
         if keys == "":
@@ -70,6 +74,7 @@ class setup():
             json.dump(info, json_file, indent=4)
             json_file.close()
 
+    #Create new thread
     def convo():
         with open("MK_info.json","r") as info_file:
             info = json.load(info_file)

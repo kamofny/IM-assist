@@ -7,11 +7,12 @@
 # of code copied from the imported files. This is a side 
 # project and should not be taken professionally.
 #
-# Description: Delete json, upload, create json
+# Description: Quick commands for the file.
 #
 # Done   Name     Description
 # ----   ----     ----------- 
-# Yes  | Make | Allows for easy github updating.
+# Yes | Start | Quick start of the program
+# Yes | Build | Get rid of API, commit, put API back.
 #
 #############################################################
 

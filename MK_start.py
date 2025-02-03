@@ -7,11 +7,12 @@
 # of code copied from the imported files. This is a side 
 # project and should not be taken professionally.
 #
-# Description: Running AI with voice/text
+# Description: Deals with AI voice/text response.
 #
 # Done   Name     Description
 # ----   ----     ----------- 
-# @    | @     | @
+# Yes | Text  | Allow text to be sent.
+# No  | Voice | Allow voice to be converted and sent.
 #
 #############################################################
 
