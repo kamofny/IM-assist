@@ -24,6 +24,16 @@ import json
 #Run file depending on button pressed
 class setup():
 
+    #Check if assistant exists
+    def info():
+        with open('MK_info.json','r') as json_file:
+            info = json.load(json_file)
+            assist = info["assist"]
+            json_file.close()
+        if assist == "":
+            return False
+        return True
+
     #Get key and and delete all assistants
     def delete():
         with open('MK_info.json','r') as json_file:

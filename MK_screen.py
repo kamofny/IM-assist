@@ -13,14 +13,13 @@
 # ----   ----     ----------- 
 # Yes | Screen | Have proper screen setup.
 # Yes | Text   | Allow for text to send.
-# No  | Voice  | Allow for voice to send. (allow deactive to put ai to sleep)
+# No  | Voice  | Allow for voice to send. (Way to stop talking?)
+# No  | Mute   | A way to mute the voice.
 # Yes | Icon   | Custom icon.
 # Yes | Setup  | Get Setup screen.
 # Yes | Thread | Allow Multithreading
 #
 # MAIN FILE NOTES (FOUND ONLY HERE): Planning to create executable.
-# When voice is hit, diable text, enable mic with new thread and stuff...
-# When thread goes then disable send button. (Find how to stop voice also?)
 #
 #############################################################
 
@@ -57,9 +56,18 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         self.ready = customtkinter.CTkButton(self, command=self.start, text="Start Assistant")
         self.ready.grid(row=2, column=1, padx=(10,20), pady=(20,20))
 
+        #Check if assistant is in or not
+        result = MK_manage.setup.info()
+        if result:
+            self.ready.configure(state="normal")
+        else:
+            self.ready.configure(state="disabled")
+
     def delete(self): #Allows to change API key
+        self.ready.configure(state="disabled")
         MK_manage.setup.delete()
     def create(self): #Allows to add API key
+        self.ready.configure(state="normal")
         key = self.api_box.get()
         MK_manage.setup.create(key)
     def start(self): #Allows to start new convo
@@ -90,9 +98,8 @@ class App(customtkinter.CTk):
         #Topbar buttons
         self.topbar_button_1 = customtkinter.CTkButton(self.topbar_frame, command=self.setup_event, text="Setup")
         self.topbar_button_1.grid(row=0, column=0, padx=20, pady=20)
-        self.topbar_button_2 = customtkinter.CTkButton(self.topbar_frame, command=self.voice_event, text="Voice")
+        self.topbar_button_2 = customtkinter.CTkButton(self.topbar_frame, command= lambda : self.threads(True), text="Voice")
         self.topbar_button_2.grid(row=0, column=2, padx=20, pady=20)
-        self.topbar_button_2.configure(state="disabled")#temp
 
         #Console
         self.textbox = customtkinter.CTkTextbox(self, width=250)
@@ -105,17 +112,24 @@ class App(customtkinter.CTk):
         self.entry.grid(row=2, column=0, padx=(20,10), pady=(10,20), sticky="nsew")
         
         #Submit text button
-        self.main_button_1 = customtkinter.CTkButton(master=self, command=self.threads, fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="Send MSG")
+        self.main_button_1 = customtkinter.CTkButton(master=self, command= lambda : self.threads(False), fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"), text="Send MSG")
         self.main_button_1.grid(row=2, column=1, padx=(10, 20), pady=(10, 20), sticky="nsew")
 
-    #Moves from text to voice
+    #Activate/Deactive Voice
     def voice_event(self):
-        self.textbox.insert("end","voice event\n\n") #placeholder/temp
-        self.textbox.see("end")
+        print(self.main_button_1.cget("state"))
+        if (self.main_button_1.cget("state")) == "disabled":
+            self.main_button_1.configure(state="normal", fg_color="transparent")
+        else:
+            #Move on ... TEMP
+            self.main_button_1.configure(state="disabled", fg_color="gray")
 
-    #Threading text_event
-    def threads(self):
-        t = Thread(target=self.text_event)
+    #Stop freezing with Multi-Threading
+    def threads(self,listen):
+        if listen:
+            t = Thread(target=self.voice_event)
+        else:
+            t = Thread(target=self.text_event)
         t.start()
 
     #Display sent and recieved text

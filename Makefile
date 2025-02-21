@@ -26,7 +26,7 @@ build:
 
 	@echo Uploading!
 	@git add .
-	@git commit -m "Account Change"
+	@git commit -m "Incomplete Weekly Update"
 	@git push origin master
 	@echo Uploaded!
 

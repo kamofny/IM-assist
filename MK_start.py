@@ -21,6 +21,7 @@ from openai import OpenAI
 import json
 
 class running():
+    #Get response to play
     def response(voice):
         stream = TextToAudioStream(GTTSEngine())
 
