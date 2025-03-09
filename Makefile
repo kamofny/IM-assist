@@ -26,7 +26,7 @@ build:
 
 	@echo Uploading!
 	@git add .
-	@git commit -m "Incomplete Weekly Update"
+	@git commit -m "README"
 	@git push origin master
 	@echo Uploaded!
 
