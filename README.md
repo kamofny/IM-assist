@@ -19,10 +19,9 @@ git clone https://github.com/kamofny/IM-assist.git
 2. install requirements with pip.
 
 3. run the application.
-'''
+```
 py MK_screen.py
-'''
-
+```
 
 ### Usage
 
@@ -34,11 +33,11 @@ py MK_screen.py
 
 ### Requirements
 
-openai
-json
-customtkinter
-thread
-RealTimeTTS
+* openai
+* json
+* customtkinter
+* thread
+* RealTimeTTS
 
 ### Author
 
